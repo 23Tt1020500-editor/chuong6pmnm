@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Danh sách sinh viên{% endblock %}
+
+{% block content %}
+<h1>Danh sách sinh viên</h1>
+<p>Tổng số: {{ students|length }} sinh viên</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>ID</th>
+      <th>MSSV</th>
+      <th>Họ tên</th>
+      <th>GPA</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ s.id }}</td>
+      <td>{{ s.mssv }}</td>
+      <td>{{ s.name }}</td>
+      <td {% if s.gpa < 5 %}class="low"{% endif %}>{{ "%.2f"|format(s.gpa) }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">Chưa có sinh viên nào. Mở <a href="/them-mau">/them-mau</a> để thêm dữ liệu mẫu.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p><a href="/bang-sinh-vien">Xem bảng xếp hạng theo GPA →</a></p>
+{% endblock %}

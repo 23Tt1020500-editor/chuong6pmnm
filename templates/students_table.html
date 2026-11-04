@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Bảng sinh viên{% endblock %}
+
+{% block content %}
+<h1>Bảng sinh viên (xếp theo GPA)</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hạng</th>
+      <th>MSSV</th>
+      <th>Họ tên</th>
+      <th>GPA</th>
+      <th>Xếp loại</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ s.mssv }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ "%.2f"|format(s.gpa) }}</td>
+      <td>
+        {% if s.gpa >= 8 %}Giỏi
+        {% elif s.gpa >= 6.5 %}Khá
+        {% elif s.gpa >= 5 %}Trung bình
+        {% else %}<span class="low">Yếu</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">Chưa có dữ liệu. Mở <a href="/them-mau">/them-mau</a> trước.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="3">Điểm trung bình</th>
+      <th colspan="2">{{ "%.2f"|format(avg) }}</th>
+    </tr>
+  </tfoot>
+</table>
+
+<p><a href="/">← Về danh sách</a></p>
+{% endblock %}
